@@ -184,7 +184,7 @@ $e = (int) $e;  // int(0)
 [PHP Casting](https://www.w3schools.com/php/php_casting.asp)
 
 ```injectablephp
-$a = array("Volvo", "BMW", "Toyota"); // indexed array
+$a = ["Volvo", "BMW", "Toyota"]; // indexed array
 /* var_dump() results
 
 object(stdClass)#1 (3) {
@@ -196,7 +196,7 @@ object(stdClass)#1 (3) {
   string(6) "Toyota"
 }
 */
-$b = array("Peter"=>"35", "Ben"=>"37", "Joe"=>"43"); // associative array
+$b = ["Peter"=>"35", "Ben"=>"37", "Joe"=>"43"]; // associative array
 /* var_dump() results
 
 object(stdClass)#2 (3) {
@@ -221,7 +221,7 @@ or define with the keyword `const`
 * const cannot be created inside another block scope, like inside a function or inside an if statement.
 * define can be created inside another block scope.
 
-##### Magic Constants
+#### Magic Constants
 
 ---
 Some constants are built into php.
@@ -237,6 +237,22 @@ Some constants are built into php.
 | `__NAMESPACE__`    | If used inside a namespace, the name of the namespace is returned.                           |
 | `__TRAIT__`        | If used inside a trait, the trait name is returned.                                          |
 | ClassName::class   | Returns the name of the specified class and the name of the namespace, if any.               |
+
+
+#### Super Globals
+
+`superglobals` are always accessible in all scopes. 
+Use the `global` keyword to access them.
+
+* $GLOBALS
+* [$_SERVER](https://www.w3schools.com/php/php_superglobals_server.asp)
+* [$_REQUEST](https://www.w3schools.com/php/php_superglobals_request.asp)
+* [$_POST](https://www.w3schools.com/php/php_superglobals_post.asp)
+* [$_GET](https://www.w3schools.com/php/php_superglobals_get.asp)
+* $_FILES
+* $_ENV
+* $_COOKIE
+* $_SESSION
 
 ### Operators
 
@@ -268,8 +284,8 @@ Notice key of `a` is only added once.
 
 ```injectablephp 
 <?php
-$x = array("a" => "red", "b" => "green");  
-$y = array("a" => "red", "c" => "yellow");  
+$x = ["a" => "red", "b" => "green"][];  
+$y = ["a" => "red", "c" => "yellow"];  
 
 print_r($x + $y); // union of $x and $y
 // Array ( [a] => red [b] => green [c] => yellow )
@@ -293,18 +309,29 @@ Switch statement is the same as JS.
 ### Arrays
 
 ---
+[Array Built-in Functions Ref](https://www.w3schools.com/php/php_arrays_functions.asp)
+
 Dynamic arrays are arrays that can change size dynamically at runtime. 
 In PHP, all arrays are dynamic by default.
 * Indexed
 ```injectablephp 
-`$cars = array("Volvo", "BMW", "Toyota");` 
+`$cars = ["Volvo", "BMW", "Toyota"];` 
 echo $cars[0]; // Volvo
 ```
 
 * Associative (keys are strings) ---- Similar to JS's object key value pairs
 ```injectablephp 
-$car = array("brand"=>"Ford", "model"=>"Mustang", "year"=>1964);
+$car = ["brand"=>"Ford", "model"=>"Mustang", "year"=>1964];
 echo $car["model"];
+```
+
+You can have mixed indexed and named keys:
+```injectablephp
+$myArr = [];                    // Declare array
+$myArr[0] = "apples";
+$myArr[1] = "bananas";
+$myArr["fruit"] = "cherries";   // named key                                
+$myArr[] = "hello";             // this will push onto the array [2] => "hello"
 ```
 
 * Sparse
@@ -323,7 +350,7 @@ Same loops as JS except we don't have `for { el in arr}` loops.
 Instead, we have `foreach`. 
 Assign a variable name to either the **value** or the **key and value** pair.
 ```injectablephp
-$colors = array("red", "green", "blue", "yellow");
+$colors = ["red", "green", "blue", "yellow"];
 
 foreach ($colors as $x) {
   echo "$x"; // red // green // blue // yellow
@@ -350,13 +377,17 @@ foreach ($colors as &$x) {          // Notice the & character!!
 }
 ```
 
-#### Passing by Reference in functions `&$argument`
-```injectablephp 
-function add_five(&$value) {
-  $value += 5;
-}
-```
+### `unset` keyword
+Remember to add the `unset()` function after the loop with reference.
 
+Without the unset($x) function, the $x variable will remain as a reference to 
+the last array item.
+
+Under the hood, this removes the pointer attached to the location in memory, 
+allowing it to be garbage collected.
+
+We can use this for Arrays to delete key value pairs. 
+This would make a sparse array if the array is an indexed array.
 
 ### Objects / Classes
 
@@ -376,3 +407,34 @@ class Fruit {
   }
 }
 ```
+
+### Functions
+PHP has first-class functions, allowing you to assign functions to variables.
+
+#### Passing by Reference in functions `&$argument`
+```injectablephp 
+function add_five(&$value) {
+  $value += 5;
+}
+```
+
+### Scope
+PHP's Scope is more similar to Python than JavaScript.
+
+| Type     | Definition                                                                                                   |
+|----------|--------------------------------------------------------------------------------------------------------------|
+| `global` | A variable declared outside a function has a GLOBAL SCOPE and can **_only be accessed outside a function_**. |
+| Local    | Only be accessed within that function.                                                                       |
+| `static` | To hold onto variables that will be garbage collected, use the keyword `static` in local scope.              |
+
+ 
+The `global` keyword is used to access a global variable from within a function.
+To do this, use the global keyword before the variables (inside the function):
+
+PHP also stores all global variables in an array called `$GLOBALS[index]`. 
+The index holds the name of the variable. 
+This array is also accessible from within functions 
+and can be used to update global variables directly.
+
+
+[loop scope example](../general/languages/loop_scope.md)
