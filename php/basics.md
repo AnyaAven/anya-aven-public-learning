@@ -6,6 +6,43 @@ Similar to JavaScript syntactically.
 This .md file will mainly indicate the key differences and similarities from JS.
 
 ---
+
+<!-- TOC -->
+  * [Basics of PHP](#basics-of-php)
+    * [.php file](#php-file)
+    * [Comments](#comments)
+    * [Variables](#variables)
+    * [Splitting and joining](#splitting-and-joining)
+    * [Print and string template literals](#print-and-string-template-literals)
+        * [`print_r` vs echo](#print_r-vs-echo)
+    * [Weakly Typed](#weakly-typed)
+    * [Data Types](#data-types)
+    * [Strings, Single or Double?](#strings-single-or-double)
+    * [Casting](#casting)
+    * [Constants and Magic Constants](#constants-and-magic-constants)
+        * [const vs define()](#const-vs-define)
+      * [Magic Constants](#magic-constants)
+      * [Super Globals](#super-globals)
+    * [Operators](#operators)
+        * [Strict vs Loose equality](#strict-vs-loose-equality)
+          * [`<=>` Spaceship Operator](#-spaceship-operator)
+        * [`xor` Xor Operator (Pronunciation: "x or")](#xor-xor-operator-pronunciation-x-or)
+        * [`+` Union Operator (Array)](#-union-operator-array)
+        * [Conditional Assignment](#conditional-assignment)
+          * [Reference:  W3 Schools](#reference-w3-schools)
+    * [Switch Statement](#switch-statement)
+    * [Arrays](#arrays)
+      * [Count](#count)
+    * [Loops](#loops)
+      * [Mutation by reference](#mutation-by-reference)
+    * [`unset` keyword](#unset-keyword)
+    * [Objects / Classes](#objects--classes)
+    * [Functions](#functions)
+      * [Passing by Reference in functions `&$argument`](#passing-by-reference-in-functions-argument)
+    * [Scope](#scope)
+<!-- TOC -->
+
+---
 ### .php file
 
 ---
