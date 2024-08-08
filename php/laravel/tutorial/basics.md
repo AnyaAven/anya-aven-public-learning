@@ -47,12 +47,19 @@ WARNING: Don't do this in production code unless you have your data saved!
 php artisan migrate:refresh
 ```
 
-### Tinker
-Play around with the php console! 
+### Tinker REPL
+Play around with your app in the php/laravel console! 
 
 ```shell
 php artisan tinker
 ```
+
+### Custom Commands
+Write your own custom commands. 
+Commands are typically stored in the `app/Console/Commands` directory
+
+
+[Docs](https://laravel.com/docs/11.x/artisan)
 
 ---
 ### Auto Namespace
