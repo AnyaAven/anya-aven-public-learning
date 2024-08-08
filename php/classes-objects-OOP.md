@@ -59,7 +59,7 @@ final class Fruit {                  // cannot extend
 ---
 #### Class Constants or Static
 
-Define constant properties in a class and access them using the `::` double color
+Define constant properties in a class and access them using the `::` double colon
 or scope resolution operator followed by the constant name.
 
 Use the keyword `self` to access the constant inside the class.
