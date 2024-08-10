@@ -54,6 +54,20 @@ Play around with your app in the php/laravel console!
 php artisan tinker
 ```
 
+---
+### Composer
+Composer is a package manager.
+
+A common install will be the debug toolbar,
+[GitHub](https://github.com/barryvdh/laravel-debugbar)
+
+```shell
+composer require barryvdh/laravel-debugbar --dev
+```
+
+Make sure you `.env` file is set up with `APP_DEBUG=true`
+
+---
 ### Custom Commands
 Write your own custom commands. 
 Commands are typically stored in the `app/Console/Commands` directory
@@ -83,3 +97,35 @@ namespace App\Models;
 ```
 
 This will auto import what we need versus requiring them yourself.
+
+---
+### Providers
+Inside of `AppServiceProvider.php` we can configure our app.
+
+The `boot()` function will finish after all of your dependencies are finished loading.
+For example if we'd like to turn off all lazy loading for our queries.
+```injectablephp
+Model::preventLazyLoading();
+```
+
+### Vendor
+Vendor refers to any package that we pulled from composer.
+
+```shell
+php artisan vender:publish
+```
+
+Publish means fI want to publish any relevant assets, routes, files, or views 
+to my application folder so that I can manually control and edit them.
+
+For example, we can see a component with tailwind customization for pagination links.
+But how do we edit those?
+We could publish `laravel-pagination` to allow for customization.
+It will copy the files from the package to your directory.
+
+We can also configure our Provider to switch defaults without editing the file by:
+Inside of `boot()`:
+```injectablephp
+
+Paginator::useBootstrapFive();
+```
