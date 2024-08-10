@@ -72,7 +72,7 @@ Determine if you are on a specific page with
 `request()->is('/')` or `request()->is('/about')`: Returns a boolean.
 
 ---
-### Evaluating an expresion on an attribute
+### Evaluating an expression on an attribute
 Use `:` before the attribute to evaluate it as an expression rather than a string
 `:active="request()->is('/')`
 
