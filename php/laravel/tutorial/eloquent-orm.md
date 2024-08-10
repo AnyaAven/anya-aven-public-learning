@@ -133,10 +133,7 @@ public function employer() {
     return $this->hasMany(Job::class); // Will now show you all the jobs it relates to
 }
 ```
-
-### Pivot Tables
-
-
+---
 ### Querying
 
 Querying returns a `collection` type similar to an array.
@@ -149,5 +146,55 @@ $users = User::find(3) // id 3
 $users = User->employer->name; // Finds the employer relationship on the model and returns the name
 ```
 
+---
 ### Attaching a relationship
 use the `attach()`
+
+---
+### Eager vs Lazy loading
+Use the debug toolbar to keep track of queries. 
+
+[Episode](https://laracasts.com/series/30-days-to-learn-laravel-11/episodes/13)
+
+---
+### Pagination
+Instead of getting every relationship with eager loading, we
+can paginate our loads.
+```injectablephp
+$jobs = Job::with('employer')->get(); // get all the jobs with employer relationship
+$jobs = Job::with('employer')->paginate(3); // Get all of them them 3 at a time
+```
+You can see it if you add a query to the url, `?page=2`, `?page=3`, etc.
+
+In the view for blade you can add `{{ $jobs-> links() }}`
+
+#### Simple
+We could also have simple pagination, only showing `previous` and `next` buttons
+instead of page 1 through 8 for example.
+```injectablephp
+$jobs = Job::with('employer')->simpleOaginate(3); 
+```
+> Simple pagination is very common and usually it's not common 
+> for a user to want to go from page 2 to page 8 with regular pagination.
+
+#### Cursor 
+This is the most optimized version of pagination but at the cost of the url.
+It cannot be linked to as the url is random like `?cursor=t738qq34ith`.
+
+The encoded string will hold the information of what to grab next. 
+This is only useful with extremely large data sets.
+```injectablephp
+$jobs = Job::with('employer')->cursorOaginate(3); 
+```
+
+---
+### Seeder
+
+You can customize your seeder per model in the `seeder` directory.
+Use factories to set up unique data base seeds.
+
+Run this to seed your Database:
+```injectablephp
+php artisan db:seed
+```
+
