@@ -44,6 +44,13 @@ To change this we need to add a `title` property to our `Job` model.
 Now _only_ `title` and `salary` will be fillable. 
 If the user entered a non fillable property `is_admin` it will be ignored by Eloquent.
 
+#### fillable vs guarded
+We can either say what we want to fill (more specific and secure!) or we can
+say what we want to be gaurded and _not_ filled.
+```injectablephp
+protected $guarded = [];
+```
+
 ### Auto Time Stamps
 Eloquent always adds `created_at` and `updated_at`
 
