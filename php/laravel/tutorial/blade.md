@@ -97,3 +97,30 @@ Route::get('/about/{id}', function ($id) {
     dd($id);
 });
 ```
+
+### Errors
+If the form has errors from the route, you will have access to an `$errors` array.
+You can also use the error tag to add for each individual input.
+
+```injectablephp blade
+<div>
+    <input id='title' />
+<div>
+@error('title')
+{{ $message }}
+@enderror
+```
+
+### Methods on forms
+Natively the browser only supports `GET` and `POST` on forms. 
+```html
+<form method="post">
+</form>
+```
+
+But We can hint to laravel / blade that we will be using a patch with 
+```injectablephp
+<form method="post">
+@method('PATCH')
+</form>
+```
