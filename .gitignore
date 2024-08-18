@@ -1,3 +1,5 @@
 /.idea
 /venv
 /playgrounds
+package.json
+package-lock.json
