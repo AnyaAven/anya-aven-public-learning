@@ -104,4 +104,229 @@ function increment() {
 
 ```
 
+---
 
+### Attribute Bindings
+To bind an attribute to a dynamic value we use the `v-bind` directive.
+
+>A directive is a special attribute that starts with the `v-` prefix. 
+> They are part of Vue's template syntax
+
+Pass in arguments after the colon to sync with the component's property.
+```vue
+<script setup>
+import { ref } from 'vue'
+
+const titleClass = ref('title')
+</script>
+
+<template>
+  <h1 v-bind:class="titleClass" >Make me red</h1> <!-- adds dynamic class binding here -->
+</template>
+
+<style>
+.title {
+  color: red;
+}
+</style>
+```
+Shorthand (no need to write `v-bind`): 
+```vue
+<h1 :class="titleClass" >Make me red</h1>
+```
+
+---
+
+### Event Listeners
+To add event listeners use `@click="callbackFunction`.
+
+Remember to access the variable's value property! `count.value++`
+
+```vue
+<script setup>
+import { ref } from 'vue'
+
+const count = ref(0)
+const increment = function (){
+  count.value++
+}
+console.log(count)
+</script>
+
+<template>
+  <!-- make this button work -->
+  <button @click="increment">Count is: {{ count }}</button>
+</template>
+```
+
+---
+
+### Form Bindings
+Combine both `v-bind` and `v-on` with `v-model`, eliminating the callback function.
+
+Before:
+```vue
+<script setup>
+import { ref } from 'vue'
+
+const text = ref('')
+
+function onInput(e) {
+  text.value = e.target.value
+}
+</script>
+
+<template>
+  <input :value="text" @input="onInput" placeholder="Type here">
+  <p>{{ text }}</p>
+</template>
+```
+
+After:
+```vue
+<script setup>
+import { ref } from 'vue'
+
+const text = ref('')
+
+</script>
+
+<template>
+  <input v-model="text" placeholder="Type here">
+  <p>{{ text }}</p>
+</template>
+```
+
+v-model works not only on text inputs, but also on other input types such 
+as checkboxes, radio buttons, and select dropdowns.
+
+---
+
+### If and Else
+
+Set up a component property (reference) `const awesome = ref(true`
+```vue
+<h1 v-if="awesome">Vue is awesome!</h1>
+<h1 v-else>Oh no 😢</h1>
+```
+### Lists / For Loops
+Similar to React, you need a unique key on each item in a list.
+```vue
+<ul>
+  <li v-for="todo in todos" :key="todo.id">
+    {{ todo.text }}
+  </li>
+</ul>
+```
+
+---
+### Todo List Example
+
+```vue
+<script setup>
+import { ref } from 'vue'
+
+// give each todo a unique id
+let id = 0
+
+const newTodo = ref('')
+const todos = ref([
+  { id: id++, text: 'Learn HTML' },
+  { id: id++, text: 'Learn JavaScript' },
+  { id: id++, text: 'Learn Vue' }
+])
+
+function addTodo() {
+  todos.value.push({id: id++, text: newTodo.value });
+  newTodo.value = ''
+}
+
+function removeTodo(todo) {
+  const removeId = todo.id;
+  todos.value = todos.value.filter(t => t !== todo)
+}
+</script>
+
+<template>
+  <form @submit.prevent="addTodo">
+    <input v-model="newTodo" required placeholder="new todo">
+    <button>Add Todo</button>
+  </form>
+  <ul>
+    <li v-for="todo in todos" :key="todo.id">
+      {{ todo.text }}
+      <button @click="removeTodo(todo)">X</button>
+    </li>
+  </ul>
+</template>
+```
+
+---
+### `Computed()`
+Introducing computed(). We can create a computed ref that computes 
+its .value based on other reactive data sources:
+```js
+const filteredTodos = computed(() => {
+  return hideCompleted.value
+    ? todos.value.filter((t) => !t.done)
+    : todos.value
+})
+```
+
+```vue
+<script setup>
+import { ref, computed } from 'vue'
+
+let id = 0
+
+const newTodo = ref('')
+const hideCompleted = ref(false)
+const todos = ref([
+  { id: id++, text: 'Learn HTML', done: true },
+  { id: id++, text: 'Learn JavaScript', done: true },
+  { id: id++, text: 'Learn Vue', done: false }
+])
+
+const filteredTodos = computed(() => {
+  return hideCompleted.value
+    ? todos.value.filter((t) => !t.done)
+    : todos.value
+})
+
+function addTodo() {
+  todos.value.push({ id: id++, text: newTodo.value, done: false })
+  newTodo.value = ''
+}
+
+function removeTodo(todo) {
+  todos.value = todos.value.filter((t) => t !== todo)
+}
+</script>
+
+<template>
+  <form @submit.prevent="addTodo">
+    <input v-model="newTodo" required placeholder="new todo">
+    <button>Add Todo</button>
+  </form>
+  <ul>
+    <li v-for="todo in filteredTodos" :key="todo.id">
+      <input type="checkbox" v-model="todo.done">
+      <span :class="{ done: todo.done }">{{ todo.text }}</span> <!-- Notice how to apply classes-->
+      <button @click="removeTodo(todo)">X</button>
+    </li>
+  </ul>
+  <button @click="hideCompleted = !hideCompleted">
+    {{ hideCompleted ? 'Show all' : 'Hide completed' }}
+  </button>
+</template>
+
+<style>
+.done {
+  text-decoration: line-through;
+}
+</style>
+```
+
+Notice how to apply classes `:class="{done: todo.done}"`
+
+Quick toggle, add functionality without a function: `@click="hideCompleted = !hideCompleted"`
