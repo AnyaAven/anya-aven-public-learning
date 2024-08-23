@@ -135,6 +135,41 @@ Shorthand (no need to write `v-bind`):
 <h1 :class="titleClass" >Make me red</h1>
 ```
 
+#### Passing Props to children
+This is how we pass dynamic properties to children, through binding.
+
+Spot the difference:
+```vue
+<template>
+  <ChildComp msg="greeting"/>
+</template>
+```
+vs.
+```vue
+<template>
+  <ChildComp :msg="greeting"/>
+</template>
+```
+
+Remember your `:`!The first example will pass in "greeting" to the msg prop
+in the ChildComp, the second will determine the greeting as a parent's property 
+(`const greeting = ref('Hello from parent')`).
+
+`ChildComp.vue`
+```vue
+<script setup>
+const props = defineProps({
+  msg: String
+})
+</script>
+
+<template>
+  <h2>{{ msg || 'No props passed yet' }}</h2>
+</template>
+```
+Use `const props = defineProps({yourPropName: value})` to define your props in your components.
+No import needed.
+
 ---
 
 ### Event Listeners
@@ -330,3 +365,118 @@ function removeTodo(todo) {
 Notice how to apply classes `:class="{done: todo.done}"`
 
 Quick toggle, add functionality without a function: `@click="hideCompleted = !hideCompleted"`
+
+---
+### `ref(null)`
+Need to access a DOM element to for a non-React API or to integrate some other JavaScript library?
+Similar to `useRef()` in React, we can use this to hook into the dom.
+
+Match both the `ref` attribute to the variable name in the setup.
+During setup, it will start as `null` but later will be linked correctly.
+```vue
+<script setup>
+import { ref } from 'vue'
+
+const pElementRef = ref(null)
+</script>
+
+<template>
+  <p ref="pElementRef">Hello</p>
+</template>
+```
+
+---
+### Lifecycle Hooks
+Lifecycle hooks happen during certain phases of a component's life, 
+`onMounted`, `onUpdated` and `onUnmounted`.
+
+```vue
+<script setup>
+import { ref, onMounted } from 'vue'
+
+const pElementRef = ref(null)
+
+onMounted(() => {
+  pElementRef.value.textContent = 'mounted!'
+})
+</script>
+
+<template>
+  <p ref="pElementRef">Hello</p>
+</template>
+```
+
+---
+### Watchers
+
+Similar to React's `useEffect()`, we can watch variables and react to their changes.
+
+```vue
+import { ref, watch } from 'vue'
+
+const count = ref(0)
+
+watch(count, (newCount) => {
+  // yes, console.log() is a side effect
+  console.log(`new count is: ${newCount}`)
+})
+```
+
+### Emits / Data from your Children 
+
+How to pass data back up to your parent:
+`ChildComp.vue`
+```vue
+<script setup>
+// declare emitted events
+const emit = defineEmits(['response']) // this name needs to match with emit()
+
+// emit with argument
+emit('response', 'hello from child') // name matches "response" and passes in the args.
+</script>
+```
+
+Set the child's argument onto the parent's prop.
+`App.vue`
+```vue
+<script setup>
+import { ref } from 'vue'
+import ChildComp from './ChildComp.vue'
+
+const childMsg = ref('No fjf msg yet')
+</script>
+
+<template>
+  <ChildComp @response="(msg) => childMsg = msg" />
+  <p>{{ childMsg }}</p>
+</template>
+```
+
+The parent can listen to child-emitted events using `v-on`, 
+here the handler receives the extra argument from the child 
+emit call and assigns it to local state.
+
+[Tutorial Step 13](https://vuejs.org/tutorial/#step-13)
+
+---
+### Slots 
+
+Similar to the special `children` keyword in React, you can pass in content from
+inside the starting and ending tag of your component via slots.
+
+`App.vue`
+```vue
+<ChildComp>
+  This is some slot content!
+</ChildComp>
+```
+`ChildComp.vue`
+```vue
+<template>
+  <slot>I'll display only as default if nothing is passed!</slot>
+</template>
+```
+
+---
+### TypeScript in Vue
+`<script setup lang="ts">`
