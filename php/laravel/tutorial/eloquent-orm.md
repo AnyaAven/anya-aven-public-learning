@@ -136,7 +136,7 @@ public function employer() {
 
 `Employer`
 ```injectablephp
-public function employer() {
+public function jobs() {
     return $this->hasMany(Job::class); // Will now show you all the jobs it relates to
 }
 ```
@@ -154,7 +154,7 @@ $users = User->employer->name; // Finds the employer relationship on the model a
 ```
 
 ---
-### Attaching a relationship
+### Attaching a relationship (many to many)
 use the `attach()`
 
 ---
@@ -205,3 +205,12 @@ Run this to seed your Database:
 php artisan db:seed
 ```
 
+## After Tutorial Knowledge
+--------------------------------------------------------------------------------
+
+### Pluck
+
+To pluck / find certain data from a model:
+```injectablephp
+$users = User::pluck('name'); // [ 0 => Victor Rowe" 1 => "Julianne Orzo" ]
+```
