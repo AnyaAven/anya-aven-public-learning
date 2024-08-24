@@ -59,3 +59,18 @@ The wildcard refers to the `{job}` in the URI.
 By default, it will find by the id, but can also be changed. 
 For example, the URI could be `/jobs/{job:slug}` vs the default of `/jobs/{job:id}`
 (Don't need to say `:id` as that is the default, they are the same thing).
+
+
+## After Tutorial Knowledge
+--------------------------------------------------------------------------------
+
+### Regular expressions in Routes
+This is fairly obscure knowledge and may not be relevant.
+
+This route will accept not just any endpoint, only the endpoint that matches the 
+regular expression in the `where` method.
+```injectablephp
+Route::get('/{any}', function() {
+    return view('app');
+})->where('any', '^(?!api).*');
+```
