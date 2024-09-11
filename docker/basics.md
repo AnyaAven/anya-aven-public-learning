@@ -205,3 +205,9 @@ Create a `Dockerfile` to define your image and a `compose.yaml` file to define h
 - [Compose Docs](https://docs.docker.com/reference/compose-file/)
 - [Dockerfile Docs](https://docs.docker.com/reference/dockerfile/)
 
+### No more `npm install`
+
+Docker also means you don't have to run `npm install` _unless adding dependencies_.
+
+
+
