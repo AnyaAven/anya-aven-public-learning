@@ -86,3 +86,11 @@ Squarespace doesn't care about performance as much. It uses a lot of unused CSS 
 
 6 months to see results and 1 year to really be there.
 Authority isn't gained overnight.
+
+## Website Recourses
+[Google Lighthouse](https://googlechrome.github.io/lighthouse/treemap/?gzip=1#)
+[Page Speed Insights](https://pagespeed.web.dev/)
+[Key Search](keysearch.co)
+[Search Engine Journal](searchenginejournal.com)
+
+
