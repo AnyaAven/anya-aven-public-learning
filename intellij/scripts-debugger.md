@@ -15,7 +15,7 @@ Using docker-compose.yml was able to mimic the same setup as the image / contain
 - Script params as: runserver 0.0.0.0:8000
 - Setup user env vars as set up in docker-compose.yml file
 - Change the values of the env vars to be localhost, which will exchange the docker names.
-- For example: `DATABASE_URL=postgres://postgres@localhost:5433/postgres;DEBUG=False;ES_URL=http://localhost:9200;PYTHONUNBUFFERED=1;REDIS_URL=redis://localhost:6379`
+- For example: `DATABASE_URL=postgres://postgres@localhost:5433/postgres;ES_URL=http://localhost:9200;PYTHONUNBUFFERED=1;REDIS_URL=redis://localhost:6379`
 
 Needed to install GDAL as this was dependency for the container.
 `raise ImproperlyConfigured(django.core.exceptions.ImproperlyConfigured: Could not find the GDAL library (tried "gdal", "GDAL", "gdal3.2.0", "gdal3.1.0", "gdal3.0.0", "gdal2.4.0", "gdal2.3.0", "gdal2.2.0", "gdal2.1.0", "gdal2.0.0"). Is GDAL installed? If it is, try setting GDAL_LIBRARY_PATH in your settings.`
